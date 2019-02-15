@@ -23,5 +23,5 @@ app.route('/api/inventory')
     .get(ctrl.getProducts)
 
 app.route('/api/product')
-    .put(ctrl.addProduct)
+    .post(ctrl.addProduct)
 

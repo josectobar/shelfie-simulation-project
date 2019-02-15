@@ -6,7 +6,6 @@ module.exports = {
         }).catch(err => req.status(500).send(`Error, there was a problem processing your request: ${err}`))
     }, 
     addProduct: (req, res) => {
-        console.log(req.body)
         const db = req.app.get('db')
         const { product_name, price, image_url } = req.body
         db.create_product(product_name, price, image_url).then(response => {
