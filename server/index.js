@@ -14,17 +14,19 @@ const { CONNECTION_STRING } = process.env
 
 massive(CONNECTION_STRING).then(db => {
     app.set('db', db)
-    app.listen(PORT, () => console.log(`Live at port: ${PORT}`))
 }).catch(err => {
     app.status(500).send(`Something went wrong with the DB connection!: ${err}`)
 })
 
 app.route('/api/inventory')
-    .get(ctrl.getProducts)
+.get(ctrl.getProducts)
 
 app.route('/api/product')
-    .post(ctrl.addProduct)
+.post(ctrl.addProduct)
 
 app.route('/api/product/:id')
     .delete(ctrl.deleteProduct)
+    .post(ctrl.updateProduct)
 
+
+app.listen(PORT, () => console.log(`Live at port: ${PORT}`))

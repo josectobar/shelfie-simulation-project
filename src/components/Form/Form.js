@@ -33,21 +33,14 @@ export default class Form extends Component {
         this.handleClearInput()
     }
 
-    // componentDidUpdate(oldProps){
-    //     const updateProductIndex = oldProps.inventory.findIndex(this.state.currentId)
-    //     const { product_name, price, product_id, image_url } = oldProps.inventory[updateProductIndex]
-    // }
-
-    HandleEditMode(product) {
-        const { product_name, price, product_id, image_url } = product
-        this.setState({
-            product_name: product_name,
-            price: price,
-            image_url: image_url,
-            currentId: product_id
-        })
+    componentDidUpdate(oldprops){
+        if (oldprops.currentId !== this.props.currentId) {
+            this.setState({
+                currentId: this.props.currentId
+            })
+        }
     }
-    
+
 
     render(){
         return(

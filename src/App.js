@@ -13,7 +13,7 @@ class App extends Component {
     super()
     this.state ={
       inventory:[],
-      currentid: null
+      currentId: null
     }
   }
 
@@ -31,7 +31,7 @@ class App extends Component {
 
   editProduct= (id) => {
     this.setState({
-      currentid:id
+      currentId: id
     })
   }
 
@@ -40,7 +40,7 @@ class App extends Component {
     return (
       <div className="App">
         <Dashboard editProduct={this.editProduct} getInventory = { this.getInventory }  inventory={ this.state.inventory }/>
-        <Form currentID={this.state.currentid} getInventory={ this.getInventory } />
+        <Form currentId={this.state.currentId} getInventory={ this.getInventory } />
         <Header />
       </div>
     )

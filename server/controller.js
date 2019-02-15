@@ -18,5 +18,13 @@ module.exports = {
         db.delete_product(id).then(response => {
             res.status(200).send('Product successfully deleted')
         }).catch(err => req.status(500).send(`Error, there was a problem processing your delete request: ${err}`))
+    },
+    updateProduct: (req, res) => {
+        const db = req.app.get('db')
+        const { product_name, price, image_url } = req.body
+        const { id } = req.params
+        db.update_product(id, product_name, price, image_url).then(response => {
+            res.status(200).send('update completed')
+        }).catch(err => req.status(500).send(`Error, there was a problem processing your update request: ${err}`))
     }
 }
