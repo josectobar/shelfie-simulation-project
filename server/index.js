@@ -8,7 +8,18 @@ const massive = require('massive')
 const ctrl = require('./controller')
 const app = express()
 const PORT = 4000
+app.use(bodyParser.json())
+const { CONNECTION_STRING } = process.env
 
-// massive(CONNECTION_STRING).then()
 
-app.listen(PORT, () => console.log(`Live at port: ${PORT}`))
+massive(CONNECTION_STRING).then(db => {
+    app.set('db', db)
+    app.listen(PORT, () => console.log(`Live at port: ${PORT}`))
+}).catch(err => {
+    app.status(500).send(`Something went wrong with the DB connection!: ${err}`)
+})
+
+app.route('/api/inventory')
+    .get(ctrl.getProducts)
+
+
