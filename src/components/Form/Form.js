@@ -22,7 +22,8 @@ export default class Form extends Component {
         this.setState({
             product_name:``,
             price: 0,
-            image_url:``
+            image_url:``,
+            currentId: null
         })
     }
 

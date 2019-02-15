@@ -30,7 +30,7 @@ class App extends Component {
   }
 
   editProduct= (id) => {
-    this.setState({
+      this.setState({
       currentId: id
     })
   }
