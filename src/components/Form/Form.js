@@ -8,7 +8,8 @@ export default class Form extends Component {
         this.state = {
             product_name:``,
             price: 0,
-            image_url:``
+            image_url:``,
+            currentId: null
         }    
     }
     handleUserInput = (event) => {
@@ -31,6 +32,21 @@ export default class Form extends Component {
         })
         this.handleClearInput()
     }
+
+    // componentDidUpdate(oldProps){
+    //     const updateProductIndex = oldProps.inventory.findIndex(this.state.currentId)
+    //     const { product_name, price, product_id, image_url } = oldProps.inventory[updateProductIndex]
+    // }
+
+    HandleEditMode(product) {
+        const { product_name, price, product_id, image_url } = product
+        this.setState({
+            product_name: product_name,
+            price: price,
+            image_url: image_url,
+            currentId: product_id
+        })
+    }
     
 
     render(){
@@ -41,7 +57,8 @@ export default class Form extends Component {
                 <input name="price" onChange={ this.handleUserInput }  value={ this.state.price } placeholder="Price"/>
                 <input name="image_url" onChange={ this.handleUserInput } value={ this.state.image_url } placeholder="Add image URL"/>
                 <button onClick={this.handleClearInput}>cancel</button>
-                <button onClick={this.handleNewProduct}>Add to inventory</button>
+                {!this.state.currentId? <button onClick={this.handleNewProduct}>Add to inventory</button> : <button>save</button>}
+                
             </div>
         )
     }

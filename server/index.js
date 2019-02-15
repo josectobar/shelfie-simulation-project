@@ -25,3 +25,6 @@ app.route('/api/inventory')
 app.route('/api/product')
     .post(ctrl.addProduct)
 
+app.route('/api/product/:id')
+    .delete(ctrl.deleteProduct)
+
