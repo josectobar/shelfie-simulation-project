@@ -7,7 +7,7 @@ const massive = require('massive')
 
 const ctrl = require('./controller')
 const app = express()
-const PORT = 4000
+const PORT = process.env.PORT || 4040
 app.use(bodyParser.json())
 const { CONNECTION_STRING } = process.env
 
@@ -22,4 +22,6 @@ massive(CONNECTION_STRING).then(db => {
 app.route('/api/inventory')
     .get(ctrl.getProducts)
 
+app.route('/api/product')
+    .put(ctrl.addProduct)
 

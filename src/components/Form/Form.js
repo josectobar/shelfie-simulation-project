@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 
+const postApiUrl = "/api/product"
 export default class Form extends Component {
     constructor(){
         super()
         this.state = {
-            name:``,
+            product_name:``,
             price: 0,
-            imageUrl:``
+            image_url:``
         }    
     }
     handleUserInput = (event) => {
@@ -15,12 +17,19 @@ export default class Form extends Component {
         })
     }
 
-    handleCancel = () => {
+    handleClearInput = () => {
         this.setState({
-            name:``,
+            product_name:``,
             price: 0,
-            imageUrl:``
+            image_url:``
         })
+    }
+
+    handleNewProduct = () => {
+        axios.post(postApiUrl, this.state).then(() => {
+            this.props.getInventory()
+        })
+        this.handleClearInput()
     }
     
 
@@ -28,11 +37,11 @@ export default class Form extends Component {
         return(
             <div>
                 <h1>Form</h1>
-                <input name="name" onChange={ this.handleUserInput } value={ this.state.name } placeholder="Type the product name"/>
+                <input name="product_name" onChange={ this.handleUserInput } value={ this.state.product_name } placeholder="Type the product name"/>
                 <input name="price" onChange={ this.handleUserInput }  value={ this.state.price } placeholder="Price"/>
-                <input name="imageUrl" onChange={ this.handleUserInput } value={ this.state.imageUrl } placeholder="Add image URL"/>
-                <button onClick={this.handleCancel}>cancel</button>
-                <button>Add to inventory</button>
+                <input name="image_url" onChange={ this.handleUserInput } value={ this.state.image_url } placeholder="Add image URL"/>
+                <button onClick={this.handleClearInput}>cancel</button>
+                <button onClick={this.handleNewProduct}>Add to inventory</button>
             </div>
         )
     }
