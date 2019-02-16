@@ -26,7 +26,7 @@ app.route('/api/product')
 
 app.route('/api/product/:id')
     .delete(ctrl.deleteProduct)
-    .post(ctrl.updateProduct)
+    .put(ctrl.updateProduct)
 
 
 app.listen(PORT, () => console.log(`Live at port: ${PORT}`))

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-const postApiUrl = "/api/product"
+const apiUrl = "/api/product"
 export default class Form extends Component {
     constructor(){
         super()
@@ -28,18 +28,35 @@ export default class Form extends Component {
     }
 
     handleNewProduct = () => {
-        axios.post(postApiUrl, this.state).then(() => {
+        axios.post(apiUrl, this.state).then(() => {
             this.props.getInventory()
         })
         this.handleClearInput()
     }
-
+    
     componentDidUpdate(oldprops){
-        if (oldprops.currentId !== this.props.currentId) {
+        if (oldprops.currentId !== this.props.currentId && this.props.currentId) {
+            const index = this.props.inventory.findIndex(product => product.product_id === this.props.currentId)
+            const { product_name, price, image_url } = this.props.inventory[index]
             this.setState({
+                product_name: product_name,
+                price: price,
+                image_url: image_url,
                 currentId: this.props.currentId
             })
         }
+    }
+
+    handleProductChanges = () => {
+        const { product_name, price, image_url } = this.state
+        axios.put(`${apiUrl}/${this.state.currentId}`, {
+            product_name,
+            price,
+            image_url
+        }).then(() => {
+            this.props.getInventory()
+        })
+        this.handleClearInput()
     }
 
 
@@ -51,7 +68,7 @@ export default class Form extends Component {
                 <input name="price" onChange={ this.handleUserInput }  value={ this.state.price } placeholder="Price"/>
                 <input name="image_url" onChange={ this.handleUserInput } value={ this.state.image_url } placeholder="Add image URL"/>
                 <button onClick={this.handleClearInput}>cancel</button>
-                {!this.state.currentId? <button onClick={this.handleNewProduct}>Add to inventory</button> : <button>save</button>}
+                {!this.state.currentId? <button onClick={this.handleNewProduct}>Add to inventory</button> : <button onClick={this.handleProductChanges}>save</button>}
                 
             </div>
         )
