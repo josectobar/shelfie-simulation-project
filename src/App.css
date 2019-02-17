@@ -1,11 +1,10 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.App {
+  text-align: center;
 }
 
 .App-header {
@@ -19,15 +18,84 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+nav {
+  background-color: #AB2A19;
+  height: 20vh;
+  padding: 50px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+nav .logo-section {
+  position: absolute;
+  display: flex;
+  justify-content: space-around;
+  width: 200px;
+  top: 20px;
 }
+
+nav .logo-section h3 {
+  color: white;
+  font-size: 35px;
+  margin: 15px;
+}
+
+nav .logo-section img {
+  width: 50px;
+  height: 50px;
+  margin: 15px
+}
+
+.products-container {
+  padding-top: 4em; 
+}
+
+.item-container {
+  background-color: #D34735;
+  display: flex;
+  width: 34em;
+  margin: 10px auto;
+  padding: 15px;
+}
+
+.item-img {
+  height: 10em;
+  width: 19em;
+  background-position: center; 
+  background-repeat: no-repeat;
+  background-size: 20em;
+  margin-right: 1em;
+}
+
+.right-container {
+  display: flex;
+  width: 40%;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product-info {
+  text-align: left;
+}
+
+.product-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.product-buttons button {
+  background-color: #3AD886;
+  font-weight: 700;
+  width: 5em;
+  height: 3em;
+  border-radius: 10%;
+}
+
+.input-container {
+  background-color: #3AD886;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 25em;
+  height: 30em;
+  padding: 3em;
+}
+

@@ -62,14 +62,15 @@ export default class Form extends Component {
 
     render(){
         return(
-            <div>
-                <h1>Form</h1>
+            <div className="input-container">
+                <div className="item-img" style={{"background-image" : `url(${this.state.image_url === '' ? "https://imgplaceholder.com/420x320/ff7f7f/333333/fa-image" : this.state.image_url})`}} />
                 <input name="product_name" onChange={ this.handleUserInput } value={ this.state.product_name } placeholder="Type the product name"/>
                 <input name="price" onChange={ this.handleUserInput }  value={ this.state.price } placeholder="Price"/>
                 <input name="image_url" onChange={ this.handleUserInput } value={ this.state.image_url } placeholder="Add image URL"/>
-                <button onClick={this.handleClearInput}>cancel</button>
-                {!this.state.currentId? <button onClick={this.handleNewProduct}>Add to inventory</button> : <button onClick={this.handleProductChanges}>save</button>}
-                
+                <div className="input-buttons">
+                    <button onClick={this.handleClearInput}>cancel</button>
+                    {!this.state.currentId? <button onClick={this.handleNewProduct}>Add to inventory</button> : <button onClick={this.handleProductChanges}>save</button>} 
+                </div>
             </div>
         )
     }
