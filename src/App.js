@@ -18,10 +18,12 @@ class App extends Component {
   }
 
   componentDidMount(){
+    
     this.getInventory()
   }
 
   getInventory = () => {
+
     axios.get(apiUrl).then(res => {
       this.setState({
         inventory: res.data,
@@ -31,6 +33,7 @@ class App extends Component {
   }
 
   editProduct= (id) => {
+
     this.setState({
       currentId: id
     })    
@@ -40,8 +43,14 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Dashboard editProduct={this.editProduct} getInventory = { this.getInventory }  inventory={ this.state.inventory }/>
-        <Form inventory={this.state.inventory} currentId={this.state.currentId} getInventory={ this.getInventory } />
+        <Dashboard 
+          editProduct={this.editProduct} 
+          getInventory = { this.getInventory }  
+          inventory={ this.state.inventory }/>
+        <Form 
+          inventory={this.state.inventory} 
+          currentId={this.state.currentId} 
+          getInventory={ this.getInventory } />
         <Header />
       </div>
 
