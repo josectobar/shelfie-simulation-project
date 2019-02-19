@@ -1,17 +1,30 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import {apiiUrlProduct} from '../../api'
 
-const apiUrl = "/api/product"
+
 export default class Form extends Component {
     constructor(){
         super()
         this.state = {
             product_name:``,
             price: 0,
-            image_url:``,
-            currentId: null
+            image_url:``
         }    
     }
+
+    componentDidMount(){
+        axios.get(`${apiiUrlProduct}/${this.props.match.params.id}`).then(res => {
+            console.log("FIRE!",this.props)
+            const { product_name, price, image_url } = res.data[0]
+            this.setState({
+                product_name: product_name,
+                price: price,
+                image_url: image_url
+            })
+        })
+    }
+
     handleUserInput = (event) => {
 
         this.setState({
@@ -20,20 +33,31 @@ export default class Form extends Component {
     }
 
     handleClearInput = () => {
-
-        this.setState({
+        this.props.match.path === "/edit/:id" ?
+            this.props.history.push('/') 
+        : 
+            this.setState({
             product_name:``,
             price: 0,
-            image_url:``,
-            currentId: null
+            image_url:``
+            })
+    }
+
+    handleProductChanges = () => {
+        const { product_name, price, image_url } = this.state
+        const { id } = this.props.match.params
+        axios.put(`${apiiUrlProduct}/${id}`, {
+            product_name,
+            price,
+            image_url
         })
+        this.props.history.push('/')
     }
 
     handleEmptyFields = (callBackFn) => {
-
         const tempState = Object.values(this.state)
         for (let i = 0; i < tempState.length; i++) {
-            if (tempState[i] == '' ||tempState[i] == 0) {
+            if (tempState[i] === '') {
                 return alert('Please add all fields')
             } 
         } 
@@ -42,39 +66,10 @@ export default class Form extends Component {
 
     handleNewProduct = () => {
 
-        axios.post(apiUrl, this.state).then(() => {
-            this.props.getInventory()
-        })
-        this.handleClearInput()
+        axios.post(apiiUrlProduct, this.state)
+        this.props.history.push('/')
     }
     
-    componentDidUpdate(oldprops){
-
-        if (oldprops.currentId !== this.props.currentId && this.props.currentId) {
-            const index = this.props.inventory
-                .findIndex(product => product.product_id === this.props.currentId)
-            const { product_name, price, image_url } = this.props.inventory[index]
-            this.setState({
-                product_name: product_name,
-                price: price,
-                image_url: image_url,
-                currentId: this.props.currentId
-            })
-        }
-    }
-
-    handleProductChanges = () => {
-        
-        const { product_name, price, image_url } = this.state
-        axios.put(`${apiUrl}/${this.state.currentId}`, {
-            product_name,
-            price,
-            image_url
-        }).then(() => {
-            this.props.getInventory()
-        })
-        this.handleClearInput()
-    }
 
 
     render(){
@@ -83,7 +78,7 @@ export default class Form extends Component {
                 className="input-container">
                 <div 
                     className="item-img" 
-                    style={{"background-image" : `url(${this.state.image_url === '' ? "https://imgplaceholder.com/420x320/ff7f7f/333333/fa-image" : this.state.image_url})`}} />
+                    style={{"backgroundImage" : `url(${this.state.image_url === '' ? "https://imgplaceholder.com/420x320/ff7f7f/333333/fa-image" : this.state.image_url})`}} />
                 <input 
                     name="product_name" 
                     onChange={ this.handleUserInput } 
@@ -105,15 +100,19 @@ export default class Form extends Component {
                         onClick={this.handleClearInput}>
                         cancel
                     </button>
-                    {!this.state.currentId ? 
+                    {this.props.match.path === "/edit/:id" ? 
+                        
+                        <button 
+                        onClick={ () => 
+                        this.handleEmptyFields( this.handleProductChanges )}>save
+                        </button>
+                    :    
                         <button 
                             onClick={() => 
                                 this.handleEmptyFields(this.handleNewProduct)}>Add to inventory
-                        </button> 
-                    :   <button 
-                            onClick={ () => 
-                            this.handleEmptyFields( this.handleProductChanges )}>save
-                        </button>} 
+                        </button>
+
+                    }                       
                 </div>
             </div>
         )

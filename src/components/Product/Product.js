@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Product(props){
     const { product_id, product_name, price, image_url } = props.product
@@ -7,7 +8,7 @@ export default function Product(props){
             className="item-container">
             <div 
                 className="item-img" 
-                style={{"background-image" : `url(${image_url})`}} />
+                style={{"backgroundImage" : `url(${image_url})`}} />
             <div 
                 className="right-container">
                 <div 
@@ -18,13 +19,14 @@ export default function Product(props){
                 <div 
                     className="product-buttons">
                     <button 
-                        onClick={() => props.handleDeleteProduct(product_id) }>
+                        onClick={ () => props.handleDeleteProduct(product_id) }>
                         Delete
                     </button>
-                    <button 
-                        onClick={ () => props.editProduct(product_id) }>
+                    <Link 
+                        className="product-button"
+                        to={`/edit/${product_id}`}>
                         Edit
-                    </button>
+                    </Link>
                 </div>
             </div>
         </div>
